@@ -1,10 +1,19 @@
 # Deploy do ChirpStack na Digital Ocean
 
-Deploy do ChirpStack na Digital Ocean
+<p align="center">
+<img src="/.github/photo.png" width="500px" alt="Deploy do ChirpStack na Digital Ocean"/>
+</p>
 
 ## TODO
 
-*Em construção!*
+_Em construção!_
+
+- [x] Docker
+- [x] Droplet
+- [ ] Firewall
+- [ ] Proxy
+- [ ] Cloudflare
+- [ ] Terraform
 
 ## Digital Ocean
 
