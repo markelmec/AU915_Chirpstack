@@ -2,6 +2,10 @@
 
 Deploy do ChirpStack na Digital Ocean
 
+## TODO
+
+*Em construção!*
+
 ## Digital Ocean
 
 Crie sua conta com o link abaixo e ganhe $100 para gastar durante 60 dias.
