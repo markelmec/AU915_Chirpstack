@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  # ChirpStack Network Server
+  chirpstack:
+    image: chirpstack/chirpstack:4.0.0-rc.2
+    command: -c /etc/chirpstack
+    restart: unless-stopped
+    volumes:
+      - ./.docker/chirpstack:/etc/chirpstack
+    depends_on:
+      - postgres
+      - mosquitto
+      - redis
+    ports:
+      - 8080:8080
+  # ChirpStack Gateway Bridge
+  chirpstack-gateway-bridge:
+    image: chirpstack/chirpstack-gateway-bridge:4.0.0-rc.1
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./.docker/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
+    depends_on:
+      - mosquitto
+  # ChirpStack REST API
+  chirpstack-rest-api:
+    image: chirpstack/chirpstack-rest-api:4.0.0-rc.1
+    ports:
+      - 8090:8090
+    depends_on:
+      - chirpstack
+    environment:
+      - SERVER=chirpstack:8080
+      - BIND=0.0.0.0:8090
+      - INSECURE=true
+  # PostgreSQL
+  postgres:
+    image: postgres:14-alpine
+    volumes:
+      - ./.docker/postgresql/initdb:/docker-entrypoint-initdb.d
+      - postgresqldata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+  # Redis Server
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redisdata:/data
+  # Mosquitto
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - 1883:1883
+    volumes:
+      - ./.docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+volumes:
+  postgresqldata:
+  redisdata:
