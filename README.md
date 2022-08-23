@@ -4,6 +4,17 @@
 <img src="/.github/photo.png" width="500px" alt="Deploy do ChirpStack na Digital Ocean"/>
 </p>
 
+## Current version
+
+| Service        | Version    |
+| -------------- | ---------- |
+| ChirpStack     | 4.0.0-rc.3 |
+| Gateway Bridge | 4.0.0-rc.1 |
+| Rest API       | 4.0.0-rc.1 |
+| PostgreSQL     | 14         |
+| Redis          | 7          |
+| Mosquitto      | 2          |
+
 ## TODO
 
 _Em construção!_
