@@ -8,7 +8,7 @@
 
 | Service        | Version    |
 | -------------- | ---------- |
-| ChirpStack     | 4.0.0-rc.3 |
+| ChirpStack     | 4.0.0-rc.4 |
 | Gateway Bridge | 4.0.0-rc.1 |
 | Rest API       | 4.0.0-rc.1 |
 | PostgreSQL     | 14         |
