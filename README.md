@@ -4,16 +4,26 @@
 <img src="/.github/photo.png" width="500px" alt="Deploy do ChirpStack na Digital Ocean"/>
 </p>
 
-## Current version
+## Versões dos Serviços
 
-| Service        | Version    |
-| -------------- | ---------- |
-| ChirpStack     | 4.0.0-rc.4 |
-| Gateway Bridge | 4.0.0-rc.1 |
-| Rest API       | 4.0.0-rc.1 |
-| PostgreSQL     | 14         |
-| Redis          | 7          |
-| Mosquitto      | 2          |
+| Service        | Version |
+| -------------- | ------- |
+| ChirpStack     | 4.0.0   |
+| Gateway Bridge | 4.0     |
+| Rest API       | 4.0     |
+| PostgreSQL     | 14      |
+| Redis          | 7       |
+| Mosquitto      | 2       |
+
+## Docker Hub
+
+- [ChirpStack](https://hub.docker.com/r/chirpstack/chirpstack)
+- [Gateway Bridge](https://hub.docker.com/r/chirpstack/chirpstack-gateway-bridge)
+- [Rest API](https://hub.docker.com/r/chirpstack/chirpstack-rest-api)
+
+## Notas de lançamento
+
+Confira neste [link](https://forum.chirpstack.io/t/release-chirpstack-v4-0/14844).
 
 ## TODO
 
