@@ -3,7 +3,7 @@ version: "3"
 services:
   # ChirpStack Network Server
   chirpstack:
-    image: chirpstack/chirpstack:4.0.0
+    image: chirpstack/chirpstack:4.0.1
     command: -c /etc/chirpstack
     restart: unless-stopped
     volumes:
@@ -16,7 +16,7 @@ services:
       - 8080:8080
   # ChirpStack Gateway Bridge
   chirpstack-gateway-bridge:
-    image: chirpstack/chirpstack-gateway-bridge:4.0
+    image: chirpstack/chirpstack-gateway-bridge:4.0.0
     ports:
       - 1700:1700/udp
     volumes:
@@ -25,7 +25,7 @@ services:
       - mosquitto
   # ChirpStack REST API
   chirpstack-rest-api:
-    image: chirpstack/chirpstack-rest-api:4.0
+    image: chirpstack/chirpstack-rest-api:4.0.0
     ports:
       - 8090:8090
     depends_on:
