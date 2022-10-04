@@ -1,8 +1,21 @@
 version: "3"
 
 services:
-  # ChirpStack Network Server
-  chirpstack:
+  # Proxy
+  proxy:
+    image: nginx
+    ports:
+      - "8080:8080"
+      - "8090:8090"
+    networks:
+      - chirpstack
+    volumes:
+      - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - chirpstack-01
+      - chirpstack-02
+  # ChirpStack Network Server 01
+  chirpstack-01:
     image: chirpstack/chirpstack:4.0.2
     command: -c /etc/chirpstack
     restart: unless-stopped
@@ -12,8 +25,21 @@ services:
       - postgres
       - mosquitto
       - redis
-    ports:
-      - 8080:8080
+    networks:
+      - chirpstack
+  # ChirpStack Network Server 02
+  chirpstack-02:
+    image: chirpstack/chirpstack:4.0.2
+    command: -c /etc/chirpstack
+    restart: unless-stopped
+    volumes:
+      - ./.docker/chirpstack:/etc/chirpstack
+    depends_on:
+      - postgres
+      - mosquitto
+      - redis
+    networks:
+      - chirpstack
   # ChirpStack Gateway Bridge
   chirpstack-gateway-bridge:
     image: chirpstack/chirpstack-gateway-bridge:4.0.0
@@ -23,17 +49,26 @@ services:
       - ./.docker/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
     depends_on:
       - mosquitto
-  # ChirpStack REST API
-  chirpstack-rest-api:
-    image: chirpstack/chirpstack-rest-api:4.0.0
-    ports:
-      - 8090:8090
-    depends_on:
+    networks:
       - chirpstack
+  # ChirpStack REST API
+  chirpstack-rest-api-01:
+    image: chirpstack/chirpstack-rest-api:4.0.0
     environment:
-      - SERVER=chirpstack:8080
+      - SERVER=proxy::8000
       - BIND=0.0.0.0:8090
       - INSECURE=true
+    networks:
+      - chirpstack
+  # ChirpStack REST API 02
+  chirpstack-rest-api-02:
+    image: chirpstack/chirpstack-rest-api:4.0.0
+    environment:
+      - SERVER=proxy:8000
+      - BIND=0.0.0.0:8090
+      - INSECURE=true
+    networks:
+      - chirpstack
   # PostgreSQL
   postgres:
     image: postgres:14-alpine
@@ -42,19 +77,31 @@ services:
       - postgresqldata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=root
+    networks:
+      - chirpstack
+    ports:
+      - 5431:5432
   # Redis Server
   redis:
     image: redis:7-alpine
     volumes:
       - redisdata:/data
+    networks:
+      - chirpstack
+    ports:
+      - 6378:6379
   # Mosquitto
   mosquitto:
     image: eclipse-mosquitto:2
-    ports:
-      - 1883:1883
     volumes:
       - ./.docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
-
+    networks:
+      - chirpstack
 volumes:
   postgresqldata:
   redisdata:
+
+
+networks:
+  chirpstack:
+    driver: bridge
