@@ -65,7 +65,7 @@
   # Multiple regions can be enabled simultaneously. Each region must match
   # the 'name' parameter of the region configuration in '[[regions]]'.
   enabled_regions=[
-    "au915_0",
+    "au915_1",
   ]
 
 
@@ -81,7 +81,7 @@
   # is never exposed. Changing this secret will invalidate all login and API
   # tokens. The following command can be used to generate a random secret:
   #   openssl rand -base64 32
-  secret="s02SzXEMUeLOGuUPn0EkrTkSHwyHroS0EYw7c6plweQ="
+  secret="@uT0m@T10n123e"
 
 
 [gateway]
